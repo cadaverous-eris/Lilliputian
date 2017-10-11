@@ -1,0 +1,25 @@
+#Potion Effects
+effect.shrinking=Shrinkage
+effect.growing=Growth
+
+#Potions
+potion.effect.shrinking=Potion of Shrinkage
+splash_potion.effect.shrinking=Potion of Shrinkage
+lingering_potion.effect.shrinking=Potion of Shrinkage
+tipped_arrow.effect.shrinking=Potion of Shrinkage
+potion.effect.growing=Potion of Growth
+splash_potion.effect.growing=Potion of Growth
+lingering_potion.effect.growing=Potion of Growth
+tipped_arrow.effect.growing=Potion of Growth
+
+#Status Messages
+tile.bed.tooBig=The bed is too small for your ample frame
+
+#Death Messages
+death.attack.rose=%1$s was pricked to death in a thorny rose bush
+death.attack.rose.player=%1$s walked into a thorny rose bush whilst trying to escape %2$s
+
+#Commands
+lilliputian.commands.setbasesize.usage=/setbasesize [entity] <basesize>
+lilliputian.commands.setbasesize.failure.capability=Target entity cannot be resized
+lilliputian.commands.resetsize.usage=/resetsize [entity]
