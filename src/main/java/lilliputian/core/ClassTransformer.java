@@ -45,6 +45,8 @@ public class ClassTransformer implements IClassTransformer {
 			return patchBlockCactusASM(name, basicClass, !name.equals(transformedName));
 		} else if (transformedName.contains("Entity") && !transformedName.contains("minecraftforge")) {
 			return patchGenericEntityASM(name, basicClass, !name.equals(transformedName));
+		}else if (transformedName.equals("net.minecraft.client.gui.inventory.GuiInventory")) {
+			return patchInventoryRenderASM(name, basicClass, !name.equals(transformedName));
 		}
 		return basicClass;
 	}
@@ -685,6 +687,34 @@ public class ClassTransformer implements IClassTransformer {
 				code.set(code.get(5), method);
 				code.remove(code.get(4));
 				code.remove(code.get(3));
+			}
+		}
+
+		ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		classNode.accept(writer);
+
+		return writer.toByteArray();
+	}
+	@SideOnly(Side.CLIENT)
+	public byte[] patchInventoryRenderASM(String name, byte[] bytes, boolean obfuscated) {
+		ClassNode classNode = new ClassNode();
+		ClassReader classReader = new ClassReader(bytes);
+		classReader.accept(classNode, 0);
+
+		List<MethodNode> methods = classNode.methods;
+		for (MethodNode m : methods) {
+			if (m.name.equals("drawEntityOnScreen")||m.name.equals("func_147046_a")) {
+				VarInsnNode iload0 = new VarInsnNode(Opcodes.ILOAD, 0);
+				VarInsnNode iload1 = new VarInsnNode(Opcodes.ILOAD, 1);
+				VarInsnNode iload2 = new VarInsnNode(Opcodes.ILOAD, 2);
+				MethodInsnNode method = new MethodInsnNode(Opcodes.INVOKESTATIC, "lilliputian/util/EntitySizeUtil",
+						"doRenderEntity", "(Lnet/minecraft/entity/Entity;IIIFFZ)V", false);
+				System.out.println("Found method " + name + "." + m.name + "" + m.desc);
+				InsnList code = m.instructions;
+				code.set(code.get(162), iload0);
+				code.set(code.get(163), iload1);
+				code.set(code.get(164), iload2);
+				code.set(code.get(168), method);
 			}
 		}
 

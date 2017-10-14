@@ -3,7 +3,10 @@ package lilliputian.util;
 import lilliputian.capabilities.ISizeCapability;
 import lilliputian.capabilities.SizeProvider;
 import lilliputian.handlers.EntitySizeHandler;
+import lilliputian.handlers.RenderEntityHandler;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -98,6 +101,15 @@ public class EntitySizeUtil {
 		if (getEntityScale(entity) > TINY_THRESHOLD && getEntityScale(entity) < HUGE_THRESHOLD) {
 			entity.attackEntityFrom(DamageSource.CACTUS, 1.0F);
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void doRenderEntity(Entity entityIn, int x, int y, int z, float yaw, float partialTicks, boolean p_188391_10_){
+		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+		float scale = 1/EntitySizeUtil.getEntityScale(entityIn);
+		GlStateManager.scale(scale, scale, scale);
+		rendermanager.renderEntity(entityIn,0.0,0.0,0.0,yaw,partialTicks,p_188391_10_);
+		RenderEntityHandler.registerMultiplier(x,y,"x"+scale,z);
 	}
 	
 	public static boolean isOnLadder(Entity entity) {
