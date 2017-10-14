@@ -29,7 +29,8 @@ public class RenderEntityHandler {
 		GlStateManager.pushMatrix();
 
 		GlStateManager.scale(scale, scale, scale);
-		GlStateManager.translate((event.getX() / scale) - event.getX(), (event.getY() / scale) - event.getY(), (event.getZ() / scale) - event.getZ());
+		GlStateManager.translate((event.getX() / scale) - event.getX(), (event.getY() / scale) - event.getY(),
+				(event.getZ() / scale) - event.getZ());
 		if (event.getEntity().isSneaking()) {
 			GlStateManager.translate(0, 0.125F / scale, 0);
 			GlStateManager.translate(0, -0.125F, 0);
@@ -40,23 +41,23 @@ public class RenderEntityHandler {
 	public static void renderEntityPost(RenderLivingEvent.Post event) {
 		GlStateManager.popMatrix();
 	}
-	
+
 	@SubscribeEvent
 	public static void renderEntityNamePre(RenderLivingEvent.Specials.Pre event) {
 		float scale = EntitySizeUtil.getEntityScale(event.getEntity());
-		
+
 		GlStateManager.pushMatrix();
-		
+
 		boolean flag = event.getEntity().isSneaking();
 		float vanillaOffset = event.getEntity().height + 0.5F - (flag ? 0.25F : 0.0F);
-		
+
 		GlStateManager.translate(0, -vanillaOffset, 0);
-		
+
 		float adjustedOffset = (event.getEntity().height / scale) + (0.5F) - (flag ? 0.25F : 0F);
-		
+
 		GlStateManager.translate(0, adjustedOffset, 0);
 	}
-	
+
 	@SubscribeEvent
 	public static void renderEntityNamePost(RenderLivingEvent.Specials.Post event) {
 		GlStateManager.popMatrix();
@@ -78,32 +79,30 @@ public class RenderEntityHandler {
 	@SubscribeEvent
 	public static void renderGui(GuiScreenEvent.DrawScreenEvent.Post event) {
 		GlStateManager.disableBlend();
-		for(Multiplier m : cache){
-			GlStateManager.pushMatrix();
-			GlStateManager.scale(0.5,0.5,1);
-			GlStateManager.translate(event.getGui().width/(50-m.scale),-(event.getGui().height/m.scale),0);
-			Minecraft.getMinecraft().getRenderManager().getFontRenderer().drawString(m.string,m.x*2,m.y*2,553648127);
-			GlStateManager.popMatrix();
+		for (Multiplier m : cache) {
+			//event.getGui().drawRect(m.x - 9, m.y - 36, m.x + 9, m.y, 0xFFFF0000);
+			int mouseX = event.getMouseX();
+			int mouseY = event.getMouseY();
+			if (m.x - mouseX <= 9 && mouseX - m.x <= 9 && m.y - mouseY >= 0 && m.y - mouseY <= 38) {
+				event.getGui().drawHoveringText(m.string, mouseX, mouseY);
+			}
 		}
 		cache.clear();
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void registerMultiplier(int x, int y, String string,int scale){
-		cache.add(new Multiplier(x,y,string,scale));
+	public static void registerMultiplier(int x, int y, String string) {
+		cache.add(new Multiplier(x, y, string));
 	}
 
 	private static class Multiplier {
-		public int x;
-		public int y;
+		public int x, y;
 		public String string;
-		public int scale;
 
-		public Multiplier(int x, int y, String string,int scale) {
-			this.x=x;
-			this.y=y;
-			this.string=string;
-			this.scale=scale;
+		public Multiplier(int x, int y, String string) {
+			this.x = x;
+			this.y = y;
+			this.string = string;
 		}
 	}
 
