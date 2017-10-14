@@ -3,6 +3,8 @@ package lilliputian.handlers;
 import lilliputian.Lilliputian;
 import lilliputian.util.EntitySizeUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
@@ -80,10 +82,12 @@ public class RenderEntityHandler {
 	public static void renderGui(GuiScreenEvent.DrawScreenEvent.Post event) {
 		GlStateManager.disableBlend();
 		for (Multiplier m : cache) {
-			//event.getGui().drawRect(m.x - 9, m.y - 36, m.x + 9, m.y, 0xFFFF0000);
 			int mouseX = event.getMouseX();
 			int mouseY = event.getMouseY();
-			if (m.x - mouseX <= 9 && mouseX - m.x <= 9 && m.y - mouseY >= 0 && m.y - mouseY <= 38) {
+			
+			if (event.getGui() instanceof GuiInventory && m.x - mouseX <= 12 && mouseX - m.x <= 12 && m.y - mouseY >= 0 && m.y - mouseY <= 56) {
+				event.getGui().drawHoveringText(m.string, mouseX, mouseY);
+			} else if (event.getGui() instanceof GuiContainerCreative && m.x - mouseX <= 9 && mouseX - m.x <= 9 && m.y - mouseY >= 0 && m.y - mouseY <= 38) {
 				event.getGui().drawHoveringText(m.string, mouseX, mouseY);
 			}
 		}
