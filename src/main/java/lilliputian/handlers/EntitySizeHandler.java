@@ -380,7 +380,7 @@ public class EntitySizeHandler {
 		float size = EntitySizeUtil.getEntityScale(entity);
 
 		if (event.getSource() == DamageSource.FALL) {
-			event.setAmount(event.getAmount() * Math.min(MathHelper.sqrt(size), size));
+			event.setAmount(event.getAmount() / Math.min(MathHelper.sqrt(size), size));
 		} else {
 			event.setAmount(event.getAmount() / MathHelper.sqrt(size));
 		}
@@ -388,7 +388,7 @@ public class EntitySizeHandler {
 		if (event.getSource().getImmediateSource() != null) {
 			float attackerSize = EntitySizeUtil.getEntityScale(event.getSource().getImmediateSource());
 
-			event.setAmount(event.getAmount() * MathHelper.sqrt(size));
+			event.setAmount(event.getAmount() / MathHelper.sqrt(size));
 		}
 	}
 
@@ -429,7 +429,7 @@ public class EntitySizeHandler {
 			float entitySize = EntitySizeUtil.getEntityScale(entity);
 
 			event.setVolume(event.getVolume() * MathHelper.sqrt(entitySize));
-			event.setPitch(event.getPitch() * entitySize);
+			event.setPitch(event.getPitch() / entitySize);
 		}
 	}
 
