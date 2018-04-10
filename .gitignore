@@ -18,8 +18,5 @@ build
 .gradle
 
 # other
-releases
 eclipse
 run
-libs
-*.png

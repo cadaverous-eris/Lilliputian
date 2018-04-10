@@ -1,15 +1,13 @@
 package lilliputian.capabilities;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class SizeProvider implements ICapabilitySerializable<NBTTagCompound> {
-
+	
 	private ISizeCapability capabilitySize = null;
 	
 	public SizeProvider() {

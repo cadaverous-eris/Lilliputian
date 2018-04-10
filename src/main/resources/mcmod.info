@@ -2,13 +2,13 @@
 {
   "modid": "lilliputian",
   "name": "Lilliputian",
-  "description": "A revival of the old Gulliver mod",
+  "description": "Allows mobs to spawn with different sizes",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["mangoose, Alexthe666"],
-  "credits": "UncleMion, for making the Gulliver mod, and Lordician, for making the potion effect icons.",
+  "authorList": ["mangoose"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

@@ -14,7 +14,6 @@ public class SizeCapabilityStorage implements IStorage<ISizeCapability> {
 	public NBTBase writeNBT(Capability<ISizeCapability> capability, ISizeCapability instance, EnumFacing side) {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setFloat("scale", instance.getScale());
-		tag.setFloat("base_size", instance.getBaseSize());
 		return tag;
 	}
 
@@ -25,10 +24,6 @@ public class SizeCapabilityStorage implements IStorage<ISizeCapability> {
 			NBTTagCompound tag = (NBTTagCompound) nbt;
 			if (tag.hasKey("scale", 5)) {
 				instance.setScale(tag.getFloat("scale"));
-				instance.setActualScale(tag.getFloat("scale"));
-			}
-			if (tag.hasKey("base_size", 5)) {
-				instance.setBaseSize(tag.getFloat("base_size"));
 			}
 		}
 	}

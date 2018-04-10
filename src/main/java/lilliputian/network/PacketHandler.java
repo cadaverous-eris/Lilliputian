@@ -10,8 +10,8 @@ public class PacketHandler {
 	public static SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Lilliputian.MODID);
 	
 	private static int id = 0;
-    
-    public static void registerMessages() {
+	
+	public static void registerMessages() {
     	INSTANCE.registerMessage(MessageSizeChange.MessageHolder.class, MessageSizeChange.class, id++, Side.CLIENT);
     }
 
