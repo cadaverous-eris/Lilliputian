@@ -16,6 +16,10 @@ public class RenderEntityHandler {
 	
 	@SubscribeEvent
 	public static void renderEntityPre(RenderLivingEvent.Pre event) {
+		if (event.isCanceled()) {
+			return;
+		}
+
 		float scale = EntitySizeUtil.getEntityScale(event.getEntity());
 
 		GlStateManager.pushMatrix();
@@ -36,6 +40,10 @@ public class RenderEntityHandler {
 
 	@SubscribeEvent
 	public static void renderEntityNamePre(RenderLivingEvent.Specials.Pre event) {
+		if (event.isCanceled()) {
+			return;
+		}
+
 		float scale = EntitySizeUtil.getEntityScale(event.getEntity());
 
 		GlStateManager.pushMatrix();
